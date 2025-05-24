@@ -10,9 +10,9 @@ local defaults = {
 -----------------------------------------------------------
 --testin
 -----------------------------------------------------------
-
 --make this a generic funciton and pass in tables of the required info
 --for a custom-custom picker
+--better yet, make my own popup windows...
 function M.show_custom_picker()
     local menu = {
 	{ text = "1. greet", action = M.sl1mfunc, desc = "sl1mfunc" },
@@ -49,10 +49,14 @@ function M.show_custom_picker()
     })
 end
 -----------------------------------------------------------
+-- slimfunc
+-----------------------------------------------------------
 function M.sl1mfunc()
     vim.notify("user: " .. config.user)
 end
-
+-----------------------------------------------------------
+-- setup
+-----------------------------------------------------------
 function M.setup(user_config)
     config = vim.tbl_deep_extend("force", defaults, user_config or {})
     if config.keymaps.greet then
@@ -62,5 +66,6 @@ function M.setup(user_config)
 	vim.keymap.set("n", config.keymaps.pick.lhs, M.show_custom_picker, { desc = config.keymaps.pick.desc })
     end
 end
-
+-----------------------------------------------------------
 return M
+-----------------------------------------------------------
