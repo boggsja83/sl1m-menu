@@ -1,0 +1,20 @@
+# Neovim-specific
+*.swp
+*.swo
+*.undo
+.nvim/
+.nvimlog
+
+# General development
+.DS_Store           # macOS
+*.log
+node_modules/
+build/
+dist/
+*.bak
+*.tmp
+
+# Sensitive or local config
+.env
+*.local
+
