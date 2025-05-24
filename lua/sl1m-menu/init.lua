@@ -47,6 +47,7 @@ function M.show_popup()
     -- Optional: Set keymap to close the popup
     vim.api.nvim_buf_set_keymap(buf, 'n', 'q', ':q<CR>', { noremap = true, silent = true })
     vim.api.nvim_buf_set_keymap(buf, 'n', '<ESC>', ':q<CR>', { noremap = true, silent = true })
+    vim.api.nvim_buf_set_keymap(buf, 'n', '<CR>', ':lua require("sl1m-menu").switch_to_buffer()<CR>',{})
 
     -- Optional: Ensure buffer is deleted when window is closed
     vim.api.nvim_create_autocmd("WinClosed", {
