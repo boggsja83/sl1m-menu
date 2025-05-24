@@ -42,7 +42,8 @@ function M.show_popup()
     local win = vim.api.nvim_open_win(buf, true, opts)
 
     -- Optional: Set keymap to close the popup
-    --vim.api.nvim_buf_set_keymap(buf, 'n', 'q', ':q<CR>', { noremap = true, silent = true })
+    vim.api.nvim_buf_set_keymap(buf, 'n', 'q', ':q<CR>', { noremap = true, silent = true })
+    vim.api.nvim_buf_set_keymap(buf, 'n', '<ESC>', ':q<CR>', { noremap = true, silent = true })
 
     -- Optional: Ensure buffer is deleted when window is closed
     vim.api.nvim_create_autocmd("WinClosed", {
