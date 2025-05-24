@@ -25,7 +25,7 @@ function M.show_popup()
         "Press q to close.",
     }
     ]]--
-    local lines = { vim.cmd.buffers() }
+    local lines = { vim.api.nvim_list_bufs() }
     vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
 
     -- Window configuration
