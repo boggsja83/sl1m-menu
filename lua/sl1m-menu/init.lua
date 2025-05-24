@@ -30,7 +30,10 @@ local function get_listed_buffers()
     --return listed_buffers
 
    for _, buf in ipairs(buffers) do
-	vim.notify(buf)
+	--vim.notify(buf)
+	if vim.api.nvim_buf_get_option_value(buf, 'buflisted') then
+	    vim.notify(buf)
+	end
    end
 
 
