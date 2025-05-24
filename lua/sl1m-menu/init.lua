@@ -17,7 +17,7 @@ local defaults = {
 -----------------------------------------------------------
 -- buffers_listed()
 -----------------------------------------------------------
-local function get_listed_buffers()
+function M.get_listed_buffers()
     local buffers = vim.api.nvim_list_bufs()
     local listed_buffers = {}
     for _, buf in ipairs(buffers) do
@@ -43,7 +43,7 @@ function M.show_popup()
         "Press q to close.",
     }
     ]]--
-    local lines = get_listed_buffers()
+    local lines = M.get_listed_buffers()
     vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
 
     -- Window configuration
@@ -89,9 +89,9 @@ end
 --better yet, make my own popup windows...
 function M.show_custom_picker()
     local menu = {
-	{ text = "1. greet", action = sl1mfunc, desc = "sl1mfunc" },
+	{ text = "1. greet", action = M.sl1mfunc, desc = "sl1mfunc" },
 	{ text = "2. buffers", action = ":buffers", desc = "show buffers" },
-	{ text = "3. popup", action = show_popup, desc = "show popup" },
+	{ text = "3. popup", action = M.show_popup, desc = "show popup" },
     }
 
     local snacks = require("snacks")
