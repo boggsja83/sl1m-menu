@@ -5,8 +5,61 @@ local defaults = {
     keymaps = {
 	--greet = { lhs = "<leader>T", desc = "sl1m - greet" },
 	pick = { lhs = "<leader>sp", desc = "sl1m - picker" },
+	popup = { lhs = "<leader>sx", desc = "sl1m - popup" },
     },
 }
+
+
+-----------------------------------------------------------
+-- testin popup from scratch
+-----------------------------------------------------------
+-- Function to create and show a popup window
+function M.show_popup()
+    -- Create a new empty buffer
+    local buf = vim.api.nvim_create_buf(false, true) -- false: not listed, true: scratch buffer
+
+    -- Set buffer content (example lines)
+    local lines = {
+        "Hello, this is a popup!",
+        "Press q to close.",
+    }
+    vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
+
+    -- Window configuration
+    local width = 30
+    local height = 5
+    local opts = {
+        style = "minimal", -- Minimal style for the window
+        relative = "editor", -- Position relative to the editor
+        width = width,
+        height = height,
+        row = math.floor(((vim.o.lines - height) / 2)), -- Center vertically
+        col = math.floor((vim.o.columns - width) / 2), -- Center horizontally
+        border = "single", -- Border style (single, double, rounded, none, etc.)
+    }
+
+    -- Open the floating window
+    local win = vim.api.nvim_open_win(buf, true, opts)
+
+    -- Optional: Set keymap to close the popup
+    vim.api.nvim_buf_set_keymap(buf, 'n', 'q', ':q<CR>', { noremap = true, silent = true })
+
+    -- Optional: Ensure buffer is deleted when window is closed
+    vim.api.nvim_create_autocmd("WinClosed", {
+        pattern = tostring(win),
+        callback = function()
+            vim.api.nvim_buf_delete(buf, { force = true })
+        end,
+        once = true,
+    })
+end
+
+
+
+
+
+
+
 -----------------------------------------------------------
 --testin
 -----------------------------------------------------------
@@ -64,6 +117,9 @@ function M.setup(user_config)
     end
     if config.keymaps.pick then
 	vim.keymap.set("n", config.keymaps.pick.lhs, M.show_custom_picker, { desc = config.keymaps.pick.desc })
+    end
+    if config.keymaps.popup then
+	vim.keymap.set("n", config.keymaps.popup.lhs, M.show_popup, { desc = config.keymaps.popup.desc })
     end
 end
 -----------------------------------------------------------
