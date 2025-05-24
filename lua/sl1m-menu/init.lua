@@ -22,13 +22,14 @@ local function get_listed_buffers()
     local listed_buffers = {}
     for _, buf in ipairs(buffers) do
 	--if vim.api.nvim_buf_get_option(buf, 'buflisted') then
-	if vim.api.nvim_buf_get_option_value('buflisted', buf) then
+	if vim.api.nvim_buf_get_option_value(buf, 'buflisted') then
 	    local name = vim.api.nvim_buf_get_name(buf)
 	    name = name == "" and "[Unnamed]" or vim.fn.fnamemodify(name, ":t")
 	    table.insert(listed_buffers, string.format("%d: %s", buf, name))
 	end
     end
-    return listed_buffers
+    --return listed_buffers
+    return buffers
 end
 
 
