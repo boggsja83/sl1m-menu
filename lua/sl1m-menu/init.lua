@@ -19,10 +19,13 @@ function M.show_popup()
     local buf = vim.api.nvim_create_buf(false, true) -- false: not listed, true: scratch buffer
 
     -- Set buffer content (example lines)
+    --[[
     local lines = {
         "Hello, this is a popup!",
         "Press q to close.",
     }
+    ]]--
+    local lines = { vim.cmd.buffers() }
     vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
 
     -- Window configuration
