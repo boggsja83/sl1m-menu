@@ -28,6 +28,13 @@ local function get_listed_buffers()
 	--end
     --end
     --return listed_buffers
+
+   for _, buf in ipairs(buffers) do
+	vim.notify(buf)
+   end
+
+
+
     return buffers
 end
 
