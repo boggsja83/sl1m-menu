@@ -44,6 +44,14 @@ function M.show_popup()
     }
     ]]--
     local lines = M.get_listed_buffers()
+
+
+    if #lines == 0 then
+        vim.notify("No listed buffers found", vim.log.levels.WARN)
+        return
+    end
+
+
     vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
 
     -- Window configuration
