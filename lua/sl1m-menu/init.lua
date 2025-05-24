@@ -13,6 +13,24 @@ local defaults = {
 -----------------------------------------------------------
 -- testin popup from scratch
 -----------------------------------------------------------
+
+-----------------------------------------------------------
+-- buffers_listed()
+-----------------------------------------------------------
+local function get_listed_buffers()
+    local buffers = vim.api.nvim_list_bufs()
+    local listed_buffers = {}
+    for _, buf in ipairs(buffers) do
+	if vim.api.nvim_buf_get_opetion(buf, 'buflisted') then
+	    local name = vim.api.nvim_buf_get_name(buf)
+	    name = name == "" and "[Unnamed]" or vim.fn.fnamemodify(name, ":t")
+	    table.insert(listed_buffers, string.format("%d: %s", buf, name))
+	end
+    end
+end
+
+
+-----------------------------------------------------------
 -- Function to create and show a popup window
 function M.show_popup()
     -- Create a new empty buffer
@@ -25,7 +43,7 @@ function M.show_popup()
         "Press q to close.",
     }
     ]]--
-    local lines = { vim.api.nvim_list_bufs() }
+    local lines = get_listed_buffers()
     vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
 
     -- Window configuration
@@ -47,7 +65,7 @@ function M.show_popup()
     -- Optional: Set keymap to close the popup
     vim.api.nvim_buf_set_keymap(buf, 'n', 'q', ':q<CR>', { noremap = true, silent = true })
     vim.api.nvim_buf_set_keymap(buf, 'n', '<ESC>', ':q<CR>', { noremap = true, silent = true })
-    vim.api.nvim_buf_set_keymap(buf, 'n', '<CR>', ':lua require("sl1m-menu").switch_to_buffer()<CR>',{})
+    --vim.api.nvim_buf_set_keymap(buf, 'n', '<CR>', ':lua require("sl1m-menu").switch_to_buffer()<CR>',{})
 
     -- Optional: Ensure buffer is deleted when window is closed
     vim.api.nvim_create_autocmd("WinClosed", {
@@ -63,8 +81,6 @@ end
 
 
 
-
-
 -----------------------------------------------------------
 --testin
 -----------------------------------------------------------
@@ -73,9 +89,9 @@ end
 --better yet, make my own popup windows...
 function M.show_custom_picker()
     local menu = {
-	{ text = "1. greet", action = M.sl1mfunc, desc = "sl1mfunc" },
+	{ text = "1. greet", action = sl1mfunc, desc = "sl1mfunc" },
 	{ text = "2. buffers", action = ":buffers", desc = "show buffers" },
-	{ text = "3. popup", action = M.show_popup, desc = "show popup" },
+	{ text = "3. popup", action = show_popup, desc = "show popup" },
     }
 
     local snacks = require("snacks")
