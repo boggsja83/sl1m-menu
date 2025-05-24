@@ -70,6 +70,7 @@ function M.show_custom_picker()
     local menu = {
 	{ text = "1. greet", action = M.sl1mfunc, desc = "sl1mfunc" },
 	{ text = "2. buffers", action = ":buffers", desc = "show buffers" },
+	{ text = "3. popup", action = M.show_popup, desc = "show popup" },
     }
 
     local snacks = require("snacks")
